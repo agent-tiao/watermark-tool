@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 客户文档与品牌素材（避免公开泄露）
+input/
+output/
+assets/watermark_logo.jpg
+
+# 中间产物
+*_tmp.pdf
+~*.tmp.pdf
+
+# 系统文件
+Thumbs.db
+desktop.ini
+.DS_Store
