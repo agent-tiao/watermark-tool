@@ -1,8 +1,8 @@
-# watermark-tool
+# watermark-tool — Anti-Removal PDF / Word Watermark Tool
 
 [简体中文](README.md) | English
 
-A command-line tool that converts **Word / PDF** files into **rasterized PDFs** and **burns a logo watermark into every page's pixels**, making the watermark hard to remove. It also ships as a standard **Agent Skill** for Claude Code, opencode, and other AI clients.
+An open-source tool that **watermarks PDF and Word files** and **prevents PDF watermarks from being removed**. It converts pages into rasterized PDFs and **burns a logo watermark into every page's pixels**, so regular PDF watermark removers have no layer to delete. Built for document leak protection, external sharing, quotations, and technical documentation. It also ships as a standard **Agent Skill** for Claude Code, opencode, and other AI clients.
 
 ## The problem: a watermark that can be deleted in one click is not a watermark
 
@@ -169,6 +169,30 @@ The script selects the pipeline based on the input type:
 - After rasterization, text **cannot be copied or searched**, and accessibility support is lost. This approach is not suitable when a searchable document is required.
 - When sending the file through chat tools, choose **"Send file"** rather than image/link conversion to avoid recompression.
 - On Windows, if Word occasionally raises a COM error, close any leftover `WINWORD` processes and retry.
+
+## FAQ
+
+### How do I stop a PDF watermark from being removed?
+
+A normal PDF watermark is a separate layer/object that Acrobat, pdfcpu, and similar tools can delete directly. This tool rasterizes every page first and composites the watermark into the pixels, so there is no watermark object to delete. Removing it requires page-by-page image editing.
+
+### Is this 100% removal-proof?
+
+No. Object-level watermark removers do not work on the output, but AI/Photoshop inpainting can still remove part of the watermark—it is lossy, slow, and must be done page by page. More visible and densely tiled watermarks are more expensive to remove.
+
+### How do I batch watermark Word and PDF files?
+
+Install the dependencies and run `watermark_pdf.py` with `.docx`, `.doc`, or `.pdf` inputs. For batches, loop over the files, or let an Agent Skills-compatible AI client follow `skills/pdf-watermark/SKILL.md`.
+
+### Does watermarking make text unsearchable?
+
+Yes. Rasterization turns text into an image, so it cannot be copied, searched, or read by accessibility tools. This approach is not suitable if the text layer must be preserved.
+
+### Can this identify who leaked a document?
+
+The tool does not embed user identity, so it cannot identify a specific recipient. It makes the watermark harder to remove silently and provides evidence that a file was watermarked or came from a brand. To trace a specific recipient, generate a unique watermark per copy (name, ID, etc.) and keep distribution records.
+
+**Related searches**: prevent PDF watermark removal, anti-removal PDF watermark, batch watermark Word and PDF, document leak protection, watermark PDF against removal.
 
 ## License
 
