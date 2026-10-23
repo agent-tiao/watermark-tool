@@ -4,9 +4,23 @@
 
 A command-line tool that converts **Word / PDF** files into **rasterized PDFs** and **burns a logo watermark into every page's pixels**, making the watermark hard to remove. It also ships as a standard **Agent Skill** for Claude Code, opencode, and other AI clients.
 
-## Overview
+## The problem: a watermark that can be deleted in one click is not a watermark
 
-Regular PDF watermarks live in a separate layer or object and can be deleted with tools such as Acrobat or pdfcpu. `watermark-tool` takes a different approach:
+People watermark documents to stop them from being casually forwarded or leaked. But a normal PDF watermark is just a **separate layer/object**—a recipient can remove it in seconds with Acrobat, pdfcpu, or an online tool, with no technical skill required.
+
+Once the watermark is gone, the document looks exactly like the original. When it does leak:
+
+- You **don't know who leaked it**.
+- You **don't know how it leaked**.
+- You **cannot even prove the file was ever watermarked**.
+
+A watermark should be a deterrent and a trace. A one-click-removable watermark is just decoration. **That is why this tool exists.**
+
+**Typical use cases**: quotations, technical documentation, training material, design drafts, bids, and any partner-facing document whose distribution needs to be controlled.
+
+## The solution
+
+`watermark-tool` does not treat the watermark as a layer. It **burns it into every page's pixels**:
 
 1. Render every page to a bitmap.
 2. Composite a semi-transparent logo across the page at an angle, with staggered tiling.
